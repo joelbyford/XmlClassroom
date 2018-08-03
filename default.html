@@ -1,0 +1,462 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>XML Classroom</title>
+
+   	<!-- jQuery Popup Scripts -->
+    <script src="jquery-1.10.2.js"></script>
+
+   
+
+    <script>
+        //Global Editor Text Session Variable Name
+        if (querystring("template") == '')
+            var sessionVar = "editorText";
+        else
+            var sessionVar = querystring("template");
+
+
+        //center function
+        //courtesy of Stack Overflow: http://stackoverflow.com/questions/210717/using-jquery-to-center-a-div-on-the-screen
+        jQuery.fn.center = function () {
+            this.css("position", "absolute");
+            this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) +
+                                                        $(window).scrollTop()) + "px");
+            this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) +
+                                                        $(window).scrollLeft()) + "px");
+            return this;
+        }
+
+        //right function
+        //derived from above center function.
+        jQuery.fn.right = function () {
+            this.css("position", "absolute");
+            this.css("top", Math.min(0, ($(window).height()) +
+                                                        $(window).scrollTop()) + "px");
+            this.css("left", Math.max(0, ($(window).width() - $(this).outerWidth()) +
+                                                        $(window).scrollLeft()) + "px");
+            return this;
+        }
+
+        //querystring function
+        function querystring(key) {
+            var re = new RegExp('(?:\\?|&)' + key + '=(.*?)(?=&|$)', 'gi');
+            var r = [], m;
+            while ((m = re.exec(document.location.search)) != null) r.push(m[1]);
+            return r;
+        }
+
+        function aboutOpen() {
+            //center the box
+            $("#aboutPanel").center();
+
+            //show the box
+            $("#aboutPanel").fadeIn("slow");
+        }
+
+        function aboutClose() {
+            $("#aboutPanel").fadeToggle("slow");
+        }
+
+        function courseOpen() {
+            //center the box
+            $("#coursePanel").right();
+
+            //show the box
+            $("#coursePanel").slideDown("slow");
+        }
+
+        function courseClose() {
+            $("#coursePanel").slideToggle("slow");
+        }
+
+        function openTemplate(sUrl) {
+            window.open("./default.html?course=" + querystring("course") + "&template=" + encodeURI(sUrl), "_blank");
+        }
+
+        function openSolution(sUrl) {
+            
+            $.ajax({
+                type: "GET",
+                url: sUrl,
+                dataType: "text",
+                error: function (err) {
+                    alert("The solution file '" + sUrl + "' does not exist.");
+                },
+                success: function (sText) {
+                    $("#solutionText").text(sText);
+                    var solEditor = ace.edit("solutionDiv");
+                    solEditor.setTheme("ace/theme/eclipse");
+                    solEditor.setReadOnly(true);
+                    solEditor.getSession().setMode("ace/mode/xml");
+                    solEditor.setShowPrintMargin(false);
+                }
+            });
+
+
+            $("#solutionPanel").center();
+            
+            $("#solutionDiv").css("height", ($("#solutionPanel").height() - 80) + "px");
+
+            
+
+            $("#solutionPanel").fadeIn("slow");
+        }
+
+        function solutionClose() {
+            $("#solutionPanel").fadeToggle("slow");
+        }
+
+        function loadScreen() {
+            //show and populate course menu item
+            var sCourseUrl = querystring("course");
+
+            if (sCourseUrl != '') {
+                $("#courseButton").show();
+                $.ajax({
+                    type: "GET",
+                    url: sCourseUrl,
+                    dataType: "xml",
+                    error: function (err) {
+                        alert("The course file '" + sCourseUrl + "' does not exist.");
+                    },
+                    success: function (oXml) {
+
+                        //Title of Course
+                        $(oXml).find("courseTitle").each(function () {
+                            $("#courseTitle").text($(this).text());
+                        });
+
+                        //List of Exercises
+                        $(oXml).find("exercise").each(function () {
+                            $("#courseTable").append("<tr>"
+                                + "<td>" + $(this).children("title").text() + "</td>"
+                                + "<td style='text-align:center'><img width='25px' src='./images/smallArrow.png' onclick='javascript:openTemplate(&quot;" + $(this).children("template").text() + "&quot;)'/></td>"
+                                + "<td style='text-align:center'><img width='25px' src='./images/smallBlueArrow.png' onclick='javascript:openSolution(&quot;" + $(this).children("solution").text() + "&quot;)'/></td>"
+                                + "</tr>");
+                        });
+
+                        //List of References
+                        $(oXml).find("reference").each(function () {
+                            $("#referenceTable").append("<tr>"
+                                + "<td style='text-align:center'><a target='_blank' href='" + $(this).children("href").text() + "'>" + $(this).children("title").text() + "</a></td>"
+                                + "</tr>");
+                        });
+                    }
+                });
+
+            }
+            else
+                $("#courseButton").hide();
+
+            //Restore editor text if page is just refreshing
+            if (sessionStorage.getItem(sessionVar)) {
+                editor.setValue(sessionStorage.getItem(sessionVar), 1);
+            } else {
+                //Get data from template if url provided in querystring
+                var sTemplUrl = querystring("template");
+
+                if (sTemplUrl != '') {
+                    $.ajax({
+                        type: "GET",
+                        url: sTemplUrl,
+                        dataType: "text",
+                        error: function (err) {
+                            alert("The template file '" + sTemplUrl + "' does not exist.");
+                        },
+                        success: function (sText) {
+                            editor.setValue(sText);
+                        }
+                    });
+
+                } else {
+                    //No session variable and no template to open, just default text
+                    editor.setValue("<?xml version='1.0' encoding='UTF-8'?>", 1);
+                }
+            }
+
+        }
+
+        
+
+        //Event Handler - File New
+        function fileNew() {
+            editor.setValue("<?xml version='1.0' encoding='UTF-8'?>", 1);
+        }
+    </script>
+
+    <link href="MetroStyle/default.css" rel="stylesheet" />
+    <style type="text/css" media="screen">
+
+        #editor { 
+            position: absolute;
+            top: 100px;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+
+        .toolbar {
+            padding:0px;
+            border:1px solid black;
+            background-color:lightgray;
+            width:100%;
+        }
+
+        .toolbarButton {
+            padding:0px;
+            border:1px dashed black;
+            width:55px;
+            text-align:center;
+            vertical-align:middle;
+            cursor:pointer;
+        }
+
+        .about {
+            position: absolute;
+            top: 300px;
+            right: 300px;
+            bottom: 300px;
+            left: 300px;
+            visibility:hidden;
+        }
+
+       #aboutPanel {
+            padding:50px;
+            display:none;
+            text-align:center;
+            position:absolute;
+            z-index:100;
+            background-color:white;
+            border:solid 1px black;
+        }
+
+       #solutionPanel{
+            padding:10px;
+            display:none;
+            position:absolute;
+            z-index:100;
+            background-color:white;
+            border:solid 1px black;
+        }
+
+       #coursePanel {
+            padding:25px;
+            display:none;
+            text-align:center;
+            position:absolute;
+            z-index:90;
+            background-color:white;
+            border:solid 1px black;
+            bottom:0;
+        }
+
+        tr {
+            border:1px dashed black;
+        }
+        
+        td {
+            border:1px dashed black;
+        }
+
+   
+    </style>
+    <style type="text/css">
+         .upload { 
+             overflow: hidden; 
+             position: relative;  
+             text-align: right; 
+         }
+         .upload, .upload_file { 
+             width: 65px; 
+             height: 35px; 
+             cursor:pointer; 
+         }
+         .upload_file { 
+             opacity: 0; 
+             filter: alpha(opacity=0); 
+             position: absolute; 
+             left: -15px; 
+             top: -8px; 
+               
+         }
+         .upload { 
+             color: black; 
+         }
+    </style>
+ 
+</head>
+<body onload="loadScreen()">
+
+    <!-- Solution Panel -->
+    <div id="solutionPanel" style="width:80%;height:80%">
+        <div id="solutionHead">
+            <h1>Solution</h1>
+            <button onclick="solutionClose()">Close</button>
+        </div>
+        <div id="solutionDiv" >
+            <pre id="solutionText" class="brush: xml;">&lt;test/&gt;</pre>
+        </div>
+    </div>
+
+    <!-- About Screen Panel (Hidden) -->
+    <div id="aboutPanel" onclick="aboutClose()">
+        <h1>XML Classroom</h1>
+        <h2>Version Beta 2</h2>
+        <h6>Copyright (c) 2012 - Present</h6>
+        <h6><a href="http://www.linkedin.com/in/joelbyford/" target="_blank">Joel J. Byford, CPA</a></h6>
+        <h6><a href="mailto:joel.byford@microsoft.com">joel.byford@microsoft.com</a></h6>
+        <h6>Special thanks to:<br />
+            <a href="http://ace.c9.io/" target="_blank">ACE Code Editor Project</a><br />
+            <a href="http://eligrey.com" target="_blank">Eli Grey</a>
+           
+        </h6>
+    </div>
+
+    <!-- Course Panel (Hidden) -->
+    <div id="coursePanel" onclick="courseClose()">
+        <h1 id="courseTitle">Course Name</h1>
+        <h2>Exercises</h2>
+        <table id="courseTable" style="width:100%;border:1px dashed black">
+            <tr>
+                <td style="font-weight:700">Excercise</td>
+                <td style="font-weight:700">Template</td>
+                <td style="font-weight:700">Solution</td>
+            </tr>
+        </table>
+        <p />
+        <h2>References</h2>
+        <table id="referenceTable" style="width:100%;border:1px dashed black">
+            <tr>
+                <td style="font-weight:700">Link</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Main Window -->
+    <div>
+        <div>
+            <img src="images/header-logo.png" />
+
+        </div>
+        <div>
+            <table class="toolbar">
+                <tr style="height:5px;border:none"></tr>
+                <tr style="border:none">
+                    <td style="width:25px;border:none"></td>
+                    <td class="toolbarButton" style="cursor:pointer;" onclick="fileNew()">
+                        <span style="width:65px;height:30px;" >New</span>
+                    </td>
+                    <td style="width:5px;border:none"></td>
+                    <td class="toolbarButton" style="width:65px;height:30px;">
+                        <span class="upload">
+                            <input type="file" class="upload_file" id="files"/>
+                            <span id="upload_text">Open</span>
+                        </span>
+                    </td>
+                    <td style="width:5px;border:none"></td>
+                    <td class="toolbarButton" style="cursor:pointer;" onclick="handleFileSave()">
+                        <span style="width:65px;height:30px;" >Save</span>
+                    </td>
+                    <td style="width:25px;border:none"></td>
+                    <!-- <td class="toolbarButton"><img src="images/copy.png" /></td>
+                    <td style="width:5px"></td>
+                    <td class="toolbarButton"><img src="images/paste.png" /></td>
+                    <td style="width:25px"></td>-->
+                    <td class="toolbarButton"  style="cursor:pointer;" onclick="aboutOpen()">
+                        <span style="width:65px;height:30px;" >About</span>
+                    </td>
+                    <td style="width:auto;border:none"></td>
+                    <td class="toolbarButton" id="courseButton" style="cursor:pointer;" onclick="courseOpen()">
+                        <span  style="width:65px;height:30px;"  >Course</span>
+
+                    </td>
+                </tr>
+                    <tr style="height:5px;border:none"></tr>
+            </table>
+                
+
+        </div>
+        <div>
+            <div>
+                <div id="editor"></div>
+
+            </div>
+        </div>
+    </div>
+    
+    
+    
+    
+            
+            
+    
+    
+    
+    <!-- Ace Editor Included Scripts -->
+    <script src="./ace-builds/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/eclipse");
+        editor.getSession().setMode("ace/mode/xml");
+        editor.setShowPrintMargin(false);
+
+        //Event Handler - Editor Update
+        editor.getSession().on('change', function (e) {
+            sessionStorage.setItem(sessionVar, editor.getValue());
+        });
+    </script>
+
+    <!-- File SaveAs Support -->
+    <script src="Blob.js"></script>
+    <script src="FileSaver.js"></script>
+
+
+    <!-- Open Script -->
+    <script>
+        function handleFileSelect(evt) {
+            var files = evt.target.files;
+            handleFileOpen(files[0]);
+
+        }
+
+        function handleFileOpen(file) {
+            var reader = new FileReader();
+
+            reader.onload = (function (theFile) {
+                return function (e) {
+                    editor.setValue(e.target.result);
+
+                };
+            })(file);
+
+            // Read the file as text
+            reader.readAsText(file);
+        }
+
+        function handleFileSave() {
+            data = editor.getValue();
+
+            var get_blob = function () {
+                return self.Blob;
+            }
+
+
+            var BB = get_blob();
+            saveAs(
+                  new BB([data], { type: "text/plain;charset=" + document.characterSet })
+                , "default.xml"
+            );
+        }
+
+        document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
+
+
+    </script>    
+    
+    
+
+
+</body>
+</html>

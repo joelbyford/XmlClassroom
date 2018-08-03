@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<course>
+  <courseTitle>Test Course</courseTitle>
+  
+  <!-- Exercises -->
+  <exercises>
+    <exercise>
+      <title>Exercise 1</title>
+      <template>./ExampleCourse/myTemplate1.xsd</template>
+      <solution>./ExampleCourse/mySolution1.xsd</solution>
+    </exercise>
+    <exercise>
+      <title>Exercise 2</title>
+      <template>./ExampleCourse/myTemplate2.xsd</template>
+      <solution>./ExampleCourse/mySolution2.xsd</solution>
+    </exercise>
+  </exercises>
+
+
+  <!-- References -->
+  <references>
+    <reference>
+      <title>NIEM NDR</title>
+      <href>https://www.niem.gov/documentsdb/Documents/Technical/NIEM-NDR-1-3.pdf</href>
+    </reference>
+    <reference>
+      <title>ITAC Guides</title>
+      <href>http://www.itac-guides.org/</href>
+    </reference>
+  </references>
+</course>

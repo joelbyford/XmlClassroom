@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Template 2 -->
+
+<xsd:schema 
+	xmlns="http://URL-GOES-HERE/Citation/1.0.0" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns:nc="http://niem.gov/niem/niem-core/2.0" 
+	xmlns:s="http://niem.gov/niem/structures/2.0" 
+	xmlns:j="http://niem.gov/niem/domains/jxdm/4.0" 
+	xmlns:i="http://niem.gov/niem/appinfo/2.0" 
+	xmlns:cite="http://URL-GOES-HERE/Citation-Extensions/1.0.0" 
+	targetNamespace="http://URL-GOES-HERE/Citation/1.0.0" 
+	elementFormDefault="qualified" 
+	attributeFormDefault="qualified" 
+	version="1.0.0">
+	
+	<!--Created: DATE - AUTHOR-->
+	<!--Version 1.0.0 - DATE - AUTHOR -->
+	<xsd:import namespace="http://niem.gov/niem/niem-core/2.0" schemaLocation="Subset/niem/niem-core/2.0/niem-core.xsd"/>
+	<xsd:import namespace="http://niem.gov/niem/structures/2.0" schemaLocation="Subset/niem/structures/2.0/structures.xsd"/>
+	<xsd:import namespace="http://niem.gov/niem/domains/jxdm/4.0" schemaLocation="Subset/niem/domains/jxdm/4.0/jxdm.xsd"/>
+	<xsd:import namespace="http://niem.gov/niem/appinfo/2.0" schemaLocation="Subset/niem/appinfo/2.0/appinfo.xsd"/>
+	<xsd:import namespace="http://URL-GOES-HERE/Citation-Extensions/1.0.0" schemaLocation="Citation-ExtensionSchema.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>DESCRIPTION OF THE EXCHANGE</xsd:documentation>
+		<xsd:appinfo>
+			<i:ConformantIndicator>true</i:ConformantIndicator>
+		</xsd:appinfo>
+	</xsd:annotation>
+	
+	
+	<xsd:element name="DOCUMENT-NAME" type="DOCUMENT-TYPE">
+		<xsd:annotation>
+			<xsd:documentation>DOCUMENT DESCRIPTION</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="DOCUMENT-TYPE">
+		<xsd:annotation>
+			<xsd:documentation>DESCRIPTION OF THE DOCUMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BASE DOCUMENT TYPE FROM NIEM">
+				<xsd:sequence>
+					<xsd:element ref="GLOBAL-ELEMENT NAME" maxOccurs="unbounded"/>
+					<xsd:element name="ELEMENT-NAME" type="ELEMENT-TYPE"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+</xsd:schema>

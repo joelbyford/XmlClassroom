@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Solution 1 -->
+<xsd:schema 
+	xmlns="http://URL-GOES-HERE/Citation/1.0.0" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns:nc="http://niem.gov/niem/niem-core/2.0" 
+	xmlns:s="http://niem.gov/niem/structures/2.0" 
+	xmlns:j="http://niem.gov/niem/domains/jxdm/4.1" 
+	xmlns:i="http://niem.gov/niem/appinfo/2.0" 
+	xmlns:cite="http://URL-GOES-HERE/Citation-Extensions/1.0.0" 
+	targetNamespace="http://URL-GOES-HERE/Citation/1.0.0" 
+	elementFormDefault="qualified" 
+	attributeFormDefault="qualified" 
+	version="1.0.0">
+	
+	<!--Created: 1/21/2008 - Author X-->
+	<!--Version 1.0.0 - 1/21/2008- Author X-->
+	<!--Version 1.1.0 - 6/20/2008- Author X-->
+	
+	<xsd:import namespace="http://niem.gov/niem/niem-core/2.0" schemaLocation="Subset/niem/niem-core/2.0/niem-core.xsd"/>
+	<xsd:import namespace="http://niem.gov/niem/structures/2.0" schemaLocation="Subset/niem/structures/2.0/structures.xsd"/>
+	<xsd:import namespace="http://niem.gov/niem/domains/jxdm/4.1" schemaLocation="Subset/niem/domains/jxdm/4.1/jxdm.xsd"/>
+	<xsd:import namespace="http://niem.gov/niem/appinfo/2.0" schemaLocation="Subset/niem/appinfo/2.0/appinfo.xsd"/>
+	<xsd:import namespace="http://URL-GOES-HERE/Citation-Extensions/1.0.0" schemaLocation="Citation-ExtensionSchema.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>Document schema in support of a batch citation interface transmitting one or more citations or civil violation complaints.</xsd:documentation>
+		<xsd:appinfo>
+			<i:ConformantIndicator>true</i:ConformantIndicator>
+		</xsd:appinfo>
+	</xsd:annotation>
+	<xsd:element name="CitationBatch" type="CitationBatchType">
+		<xsd:annotation>
+			<xsd:documentation>A NIEM DocumentType container used to support the submission of one (real-time) or more (batch) citations from an agency.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="CitationBatchType">
+		<xsd:annotation>
+			<xsd:documentation>A NIEM DocumentType container used to support the submission of one (real-time) or more (batch) citations from an agency.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="nc:DocumentType">
+				<xsd:sequence>
+					<xsd:element ref="j:Citation" maxOccurs="unbounded"/>
+					<xsd:element ref="j:Person" maxOccurs="unbounded"/>
+					<xsd:element ref="j:Charge" maxOccurs="unbounded"/>
+					<xsd:element ref="nc:Location" maxOccurs="unbounded"/>
+					<xsd:element ref="nc:ResidenceAssociation" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="j:ActivityChargeAssociation" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+</xsd:schema>
