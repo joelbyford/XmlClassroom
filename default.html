@@ -10,8 +10,6 @@
    	<!-- jQuery Popup Scripts -->
     <script src="jquery-1.10.2.js"></script>
 
-   
-
     <script>
         //Global Editor Text Session Variable Name
         if (querystring("template") == '')
@@ -112,6 +110,9 @@
         }
 
         function loadScreen() {
+            //Show About Box
+            aboutOpen();
+            
             //show and populate course menu item
             var sCourseUrl = querystring("course");
 
