@@ -115,6 +115,8 @@
             //show and populate course menu item
             var sCourseUrl = querystring("course");
 
+            aboutOpen();
+
             if (sCourseUrl != '') {
                 $("#courseButton").show();
                 $.ajax({
