@@ -1,0 +1,112 @@
+{
+    "dir": "ltr",
+    "lang": "en",
+    "name": "XML Classroom",
+    "scope": "/default.html",
+    "display": "standalone",
+    "start_url": "https://www.xmlclassroom.org/default.html",
+    "short_name": "XML Classroom",
+    "theme_color": "transparent",
+    "description": "XML editor",
+    "orientation": "any",
+    "background_color": "transparent",
+    "related_applications": [],
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "/images/924e9b5b-0c2f-fd90-8a23-28c3bf3343c1.webPlatform.png",
+            "sizes": "44x44",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/fd749ee3-bede-f392-16d0-6d5ad445e0d7.webPlatform.png",
+            "sizes": "48x48",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/64f24f96-9348-ee92-64da-82ae1c49f453.webPlatform.png",
+            "sizes": "1240x600",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/c97ab62f-11fe-e3ef-c565-164a5cb9e146.webPlatform.png",
+            "sizes": "300x300",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/99fff752-4224-c4dc-4a55-f9900039163d.webPlatform.png",
+            "sizes": "150x150",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/ec311674-e09f-8590-abbb-34b36896fb8a.webPlatform.png",
+            "sizes": "88x88",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/5214bee1-6e83-0623-936b-5e44a7531fb4.webPlatform.png",
+            "sizes": "24x24",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/b9ff03a5-e1ba-839e-ee7b-d7f93e9f8b83.webPlatform.png",
+            "sizes": "50x50",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/9560123a-02a5-c599-f4be-45a1739a4e58.webPlatform.png",
+            "sizes": "620x300",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/f8f38fd9-fab1-d2b6-814c-845cba607614.webPlatform.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/57fc6525-0cfa-703d-a1ff-63d4d7a92f68.webPlatform.png",
+            "sizes": "144x144",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/f43e17f6-e274-90f0-5a7f-cca35d203f49.webPlatform.png",
+            "sizes": "96x96",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/c0e02f51-c4be-f28d-3b72-bb3871f5fd67.webPlatform.png",
+            "sizes": "72x72",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/17da070a-29a2-a180-782b-9f37f635853d.webPlatform.png",
+            "sizes": "36x36",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/9ab51fa7-b2a0-3b4e-a069-ec10ad99b4e5.webPlatform.png",
+            "sizes": "1024x1024",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/09d697c3-7d5c-d45c-552d-8e876f5596de.webPlatform.png",
+            "sizes": "180x180",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/50742b40-e572-6333-4aeb-58368f11a9d3.webPlatform.png",
+            "sizes": "152x152",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/0a8471da-cee4-33cd-7f2d-daa718ccc852.webPlatform.png",
+            "sizes": "120x120",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/6cd86ddb-56ba-ae10-96db-277f329bf018.webPlatform.png",
+            "sizes": "76x76",
+            "type": "image/png"
+        }
+    ]
+}
