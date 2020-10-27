@@ -1,0 +1,28 @@
+{
+  "name": "xmlclassroom",
+  "version": "1.0.0",
+  "description": "Simple javascript xml text editor.",
+  "main": "default.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joelbyford/XmlClassroom.git"
+  },
+  "keywords": [
+    "xml",
+    "source",
+    "code",
+    "editor"
+  ],
+  "author": "Joel Byford",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/joelbyford/XmlClassroom/issues"
+  },
+  "homepage": "https://github.com/joelbyford/XmlClassroom#readme",
+  "dependencies": {
+    "jquery": "1.10.2"
+  }
+}
