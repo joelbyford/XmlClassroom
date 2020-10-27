@@ -23,6 +23,8 @@
   },
   "homepage": "https://github.com/joelbyford/XmlClassroom#readme",
   "dependencies": {
-    "jquery": "3.5.1"
+    "jquery": "3.5.1",
+    "ace-builds": "1.4.12",
+    "filesaver": "0.0.13"
   }
 }
