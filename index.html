@@ -62,98 +62,9 @@
             $("#aboutPanel").fadeToggle("slow");
         }
 
-        function courseOpen() {
-            //center the box
-            $("#coursePanel").right();
-
-            //show the box
-            $("#coursePanel").slideDown("slow");
-        }
-
-        function courseClose() {
-            $("#coursePanel").slideToggle("slow");
-        }
-
-        function openTemplate(sUrl) {
-            window.open("./index.html?course=" + querystring("course") + "&template=" + encodeURI(sUrl), "_blank");
-        }
-
-        function openSolution(sUrl) {
-            
-            $.ajax({
-                type: "GET",
-                url: sUrl,
-                dataType: "text",
-                error: function (err) {
-                    alert("The solution file '" + sUrl + "' does not exist.");
-                },
-                success: function (sText) {
-                    $("#solutionText").text(sText);
-                    var solEditor = ace.edit("solutionDiv");
-                    solEditor.setTheme("ace/theme/eclipse");
-                    solEditor.setReadOnly(true);
-                    solEditor.getSession().setMode("ace/mode/xml");
-                    solEditor.setShowPrintMargin(false);
-                }
-            });
-
-
-            $("#solutionPanel").center();
-            
-            $("#solutionDiv").css("height", ($("#solutionPanel").height() - 80) + "px");
-
-            
-
-            $("#solutionPanel").fadeIn("slow");
-        }
-
-        function solutionClose() {
-            $("#solutionPanel").fadeToggle("slow");
-        }
-
         function loadScreen() {
             //show and populate course menu item
-            var sCourseUrl = querystring("course");
-
-            //aboutOpen();
-
-            if (sCourseUrl != '') {
-                $("#courseButton").show();
-                $.ajax({
-                    type: "GET",
-                    url: sCourseUrl,
-                    dataType: "xml",
-                    error: function (err) {
-                        alert("The course file '" + sCourseUrl + "' does not exist.");
-                    },
-                    success: function (oXml) {
-
-                        //Title of Course
-                        $(oXml).find("courseTitle").each(function () {
-                            $("#courseTitle").text($(this).text());
-                        });
-
-                        //List of Exercises
-                        $(oXml).find("exercise").each(function () {
-                            $("#courseTable").append("<tr>"
-                                + "<td>" + $(this).children("title").text() + "</td>"
-                                + "<td style='text-align:center'><img width='25px' src='./images/smallArrow.png' onclick='javascript:openTemplate(&quot;" + $(this).children("template").text() + "&quot;)'/></td>"
-                                + "<td style='text-align:center'><img width='25px' src='./images/smallBlueArrow.png' onclick='javascript:openSolution(&quot;" + $(this).children("solution").text() + "&quot;)'/></td>"
-                                + "</tr>");
-                        });
-
-                        //List of References
-                        $(oXml).find("reference").each(function () {
-                            $("#referenceTable").append("<tr>"
-                                + "<td style='text-align:center'><a target='_blank' href='" + $(this).children("href").text() + "'>" + $(this).children("title").text() + "</a></td>"
-                                + "</tr>");
-                        });
-                    }
-                });
-
-            }
-            else
-                $("#courseButton").hide();
+           $("#courseButton").hide();
 
             //Restore editor text if page is just refreshing
             if (sessionStorage.getItem(sessionVar)) {
@@ -308,8 +219,8 @@
     <!-- About Screen Panel (Hidden) -->
     <div id="aboutPanel" onclick="aboutClose()">
         <h1>XML Classroom</h1>
-        <h2>Version 1.1</h2>
-        <h6>Copyright (c) 2020</h6>
+        <h2>Version 1.2</h2>
+        <h6>Copyright (c) 2021</h6>
         <h6><a href="http://www.linkedin.com/in/joelbyford/" target="_blank">Joel Byford</a></h6>
         <h6><a href="mailto:joel.byford@microsoft.com">joel.byford@microsoft.com</a></h6>
         <h6>Special thanks to:<br />
